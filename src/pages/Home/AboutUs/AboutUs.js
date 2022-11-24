@@ -7,11 +7,13 @@ import photo1 from "../../../assests/photos/photo1.jpg";
 const AboutUs = () => {
   return (
     <div>
-      <div className="w-11/12  lg:w-9/12 m-auto ">
+      <div className="w-11/12  lg:w-8/12 2xl:w-7/12 m-auto ">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div>{/* <img src={photo1} alt="" /> */}</div>
+          <div>
+            <img src={photo1} alt="" />
+          </div>
 
-          <div className="text-center md:text-left mb-4">
+          <div className="text-center md:text-left mb-4 lg:pt-16">
             <p className="text-base text-amber-500 font-semibold">About Us </p>
             <h2 className="text-3xl lg:text-5xl font-semibold mb-4 text-gray-600">
               Why Wishdeals
