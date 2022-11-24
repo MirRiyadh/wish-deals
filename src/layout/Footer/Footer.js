@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import logo from "../../assests/logo/logo.png";
 
 const Footer = () => {
@@ -6,12 +7,9 @@ const Footer = () => {
     <div>
       <footer className="p-4 shadow-xl rounded-lg md:px-6 md:py-8 bg-slate-50 ">
         <div className="sm:flex sm:items-center sm:justify-between w-8/12 m-auto ">
-          <a
-            href="https://flowbite.com/"
-            className="flex items-center mb-4 sm:mb-0"
-          >
+          <Link className="flex items-center mb-4 sm:mb-0">
             <img src={logo} className="mr-3 h-8" alt="Flowbite Logo" />
-          </a>
+          </Link>
           <ul className="flex flex-col md:flex-row justify-center flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-black">
             <li>
               <a href="#" className="mr-4 hover:underline md:mr-6 ">

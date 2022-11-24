@@ -105,12 +105,6 @@ const Login = () => {
             <span className="text-red-600 text-xs">{error}</span>
           </div>
 
-          <div className="text-left">
-            <a href="#" className="text-xs hover:underline text-sky-600">
-              Forget Password?
-            </a>
-          </div>
-
           <div className="mt-6">
             <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-sky-600 rounded-md hover:bg-sky-500 focus:outline-none focus:bg-sky-600">
               Login
