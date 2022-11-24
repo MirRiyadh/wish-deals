@@ -1,5 +1,6 @@
 import React from "react";
 import IconsSection from "./IconsSection/IconsSection";
+import ShopCategories from "./ShopCategories/ShopCategories";
 import Slider from "./Slider/Slider";
 
 const Home = () => {
@@ -7,6 +8,7 @@ const Home = () => {
     <div>
       <Slider></Slider>
       <IconsSection></IconsSection>
+      <ShopCategories></ShopCategories>
     </div>
   );
 };

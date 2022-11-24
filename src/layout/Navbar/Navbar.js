@@ -3,6 +3,7 @@ import { FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../firebase/AuthProvider";
 import "./Navbar.css";
+import logo from "../../assests/logo/logo.png";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -104,7 +105,7 @@ const Navbar = () => {
             </ul>
           </div>
           <Link to="/" className="btn btn-ghost normal-case text-xl pl-0">
-            {/* <img src={logo} className="w-32 h-6 md:w-52  md:h-8" /> */}
+            <img src={logo} alt="logo" className="w-36 h-6 md:w-56  md:h-8" />
           </Link>
         </div>
 
