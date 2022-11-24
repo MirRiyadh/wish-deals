@@ -1,0 +1,45 @@
+#user-container {
+  position: relative;
+  cursor: pointer;
+}
+
+#user-text {
+  position: absolute;
+  top: 52px;
+  background-color: black;
+  color: #fff;
+  padding: 4px 7px;
+  z-index: 10;
+  font-size: 10px;
+  text-transform: capitalize;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+#user-text::before {
+  content: "";
+  position: absolute;
+  left: 44%;
+  top: -8%;
+  transform: rotate(50deg);
+  border: 4px solid;
+  border-color: #000 #000 #000 #000;
+  z-index: 1;
+}
+
+#user-container:hover #user-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* media screen */
+@media only screen and (max-width: 992px) {
+  #user-text {
+    left: -80%;
+  }
+
+  #user-text::before {
+    left: 65%;
+  }
+}
