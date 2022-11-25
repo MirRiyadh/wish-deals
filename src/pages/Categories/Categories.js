@@ -47,7 +47,7 @@ const Categories = () => {
               <button
                 onClick={() => handleCategoriesName(category.category_name)}
                 className="my-1 mx-2 md:my-2 md:mx-0 py-2 px-3 inline-block md:block bg-amber-400 hover:bg-black hover:text-white rounded-sm mt-3 text-xs md:text-base font-semibold w-60  md:text-left m-auto uppercase md:w-36 xl:px-1 lg:w-40 xl:text-center"
-                key={category.id}
+                key={category._id}
               >
                 <Link to={`/categories/${category.category_name}`}>
                   {category.category_name}

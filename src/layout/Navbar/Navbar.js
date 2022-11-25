@@ -60,10 +60,16 @@ const Navbar = () => {
                 </Link>
                 <ul className="p-2 bg-slate-200">
                   <li>
-                    <Link>Submenu 1</Link>
+                    <Link to="/categories/apple">Apple</Link>
                   </li>
                   <li>
-                    <Link>Submenu 2</Link>
+                    <Link to="/categories/samsung">Samsung</Link>
+                  </li>
+                  <li>
+                    <Link to="/categories/oneplus">One Plus</Link>
+                  </li>
+                  <li>
+                    <Link to="/categories/huawei">Huawei</Link>
                   </li>
                 </ul>
               </li>
@@ -125,10 +131,16 @@ const Navbar = () => {
                 className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 text-black"
               >
                 <li>
-                  <Link>Item 1</Link>
+                  <Link to="/categories/apple">Apple</Link>
                 </li>
                 <li>
-                  <Link>Item 2</Link>
+                  <Link to="/categories/samsung">Samsung</Link>
+                </li>
+                <li>
+                  <Link to="/categories/oneplus">One Plus</Link>
+                </li>
+                <li>
+                  <Link to="/categories/huawei">Huawei</Link>
                 </li>
               </ul>
             </li>

@@ -6,25 +6,26 @@ import { Link } from "react-router-dom";
 const Leftside = ({ product }) => {
   const { condition_type, location, price, phone_details, used_duration } =
     product;
+
   return (
-    <div class="w-full max-w-sm rounded-lg shadow-md border-orange-300 border bg-gray-50">
+    <div className="w-full max-w-sm rounded-lg shadow-md border-orange-300 border bg-gray-50">
       <a href="#">
         <img
-          class="p-8 rounded-t-lg"
+          className="p-8 rounded-t-lg"
           src={phone_details?.phone_img}
           alt="product image"
         />
       </a>
-      <div class="px-5 pb-5">
+      <div className="px-5 pb-5">
         <a href="#">
-          <h5 class="text-xl font-semibold tracking-tight text-gray-900 mb-2">
+          <h5 className="text-xl font-semibold tracking-tight text-gray-900 mb-2">
             {phone_details?.phone_name}
           </h5>
         </a>
-        <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
+        <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
           {location}
         </span>
-        <div class="flex items-center mt-2.5 mb-5 justify-between">
+        <div className="flex items-center mt-2.5 mb-5 justify-between">
           <div className="flex items-center font-semibold capitalize">
             <span>
               <FaTools className="mr-1" />
@@ -38,14 +39,14 @@ const Leftside = ({ product }) => {
             <p>{used_duration}</p>
           </div>
         </div>
-        <div class="flex items-center justify-between">
-          <span class="text-2xl font-bold text-gray-900 2xl:text-xl lg:text-lg">
+        <div className="flex items-center justify-between">
+          <span className="text-2xl font-bold text-gray-900 2xl:text-xl lg:text-lg">
             {" "}
             {price}/-
           </span>
           <a
             href="#"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Book Now
           </a>
