@@ -26,8 +26,9 @@ const Categories = () => {
   if (isLoading) {
     return <Loading></Loading>;
   }
+
   return (
-    <div className="my-20">
+    <div className="mb-20 mt-14">
       <div className="w-4/12 m-auto">
         <h2 className="text-2xl text-center md:text-left pl-5 xl:pl-10 uppercase hidden md:block text-gray-500 font-semibold my-3">
           {categoriesname}

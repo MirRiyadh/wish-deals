@@ -4,7 +4,6 @@ import { FaBook, FaBookmark, FaClock, FaStar, FaTools } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const SingleCategory = ({ item }) => {
-  console.log(item);
   const { condition_type, location, price, phone_details, used_duration } =
     item;
   return (
@@ -12,14 +11,14 @@ const SingleCategory = ({ item }) => {
       <a href="#">
         <img
           class="p-8 rounded-t-lg"
-          src={phone_details.phone_img}
+          src={phone_details?.phone_img}
           alt="product image"
         />
       </a>
       <div class="px-5 pb-5">
         <a href="#">
           <h5 class="text-xl font-semibold tracking-tight text-gray-900 mb-2">
-            {phone_details.phone_name}
+            {phone_details?.phone_name}
           </h5>
         </a>
         <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
