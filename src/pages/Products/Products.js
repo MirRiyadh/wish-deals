@@ -79,7 +79,12 @@ const Products = () => {
           </div>
         </div>
       </div>
-      {appointment && <BookModal appointment={appointment}></BookModal>}
+      {appointment && (
+        <BookModal
+          setAppointment={setAppointment}
+          appointment={appointment}
+        ></BookModal>
+      )}
     </div>
   );
 };

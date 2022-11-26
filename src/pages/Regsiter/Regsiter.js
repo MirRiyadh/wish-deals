@@ -7,10 +7,13 @@ import {
   GithubAuthProvider,
   GoogleAuthProvider,
 } from "firebase/auth";
+import toast from "react-hot-toast";
 
 const Regsiter = () => {
   const { createUser, providerSignIn, updateUserProfile } =
     useContext(AuthContext);
+
+  const imageHostKey = process.env.REACT_APP_imageHostKey;
 
   const navigate = useNavigate();
 
@@ -37,13 +40,37 @@ const Regsiter = () => {
     const formData = new FormData();
     formData.append("image", photo);
 
-    const url = `https://api.imgbb.com/1/upload?key=79f5d4f1a6b1a5ca81ef432ce75e7d59`;
+    const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
     fetch(url, {
       method: "POST",
       body: formData,
     })
       .then((res) => res.json())
       .then((data) => {
+        if (data.success) {
+          const user = {
+            name: fullName,
+            email: email,
+            user_role: option,
+            image: data.data.display_url,
+          };
+
+          // save user information
+          fetch("http://localhost:5000/users", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(user),
+          })
+            .then((res) => res.json())
+            .then((result) => {
+              console.log(result);
+              toast.success(`${fullName} is added successfully`);
+              navigate("/login");
+            });
+        }
+
         if (password.length < 6) {
           setError("password must be 6 character");
           return;
@@ -60,7 +87,7 @@ const Regsiter = () => {
             const user = result.user;
             console.log(user);
             form.reset();
-            navigate("/login");
+
             updateUserProfile(fullName, data.data.display_url)
               .then(() => {})
               .catch((error) => console.error(error));
