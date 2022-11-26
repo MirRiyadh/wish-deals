@@ -10,18 +10,22 @@ const Brands = () => {
     {
       name: "apple",
       img: icon1,
+      id: 1,
     },
     {
       name: "samsung",
       img: icon2,
+      id: 2,
     },
     {
       name: "oneplus",
       img: icon3,
+      id: 3,
     },
     {
       name: "huawei",
       img: icon4,
+      id: 4,
     },
   ];
   return (
@@ -34,7 +38,7 @@ const Brands = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-10/12 md:w-11/12 lg:w-8/12 2xl:w-7/12 m-auto my-4">
         {brands.map((brand) => (
-          <Link to={`categories/${brand.name}`}>
+          <Link key={brand.id} to={`categories/${brand.name}`}>
             <div className=" border p-4 shadow-sm">
               <img src={brand.img} className="text-center w-16 m-auto" alt="" />
               <h3>{brand.name}</h3>
