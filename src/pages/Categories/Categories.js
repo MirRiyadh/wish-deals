@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 import { FaBook, FaBookmark, FaClock, FaStar } from "react-icons/fa";
 import { Link, useLoaderData } from "react-router-dom";
 import Loading from "../../layout/Loading/Loading";
+import CategoryModal from "./CategoryModal";
 import SingleCategory from "./SingleCategory";
 
 const Categories = () => {
   const [categoriesname, setCategoriesName] = useState("");
+  const [appointment, setAppointment] = useState(null);
   const items = useLoaderData();
 
   const { data: categories, isLoading } = useQuery({
@@ -59,11 +61,16 @@ const Categories = () => {
         <div className=" col-span-3 ">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
             {items.map((item) => (
-              <SingleCategory item={item} key={item._id}></SingleCategory>
+              <SingleCategory
+                item={item}
+                key={item._id}
+                setAppointment={setAppointment}
+              ></SingleCategory>
             ))}
           </div>
         </div>
       </div>
+      {appointment && <CategoryModal appointment={appointment}></CategoryModal>}
     </div>
   );
 };

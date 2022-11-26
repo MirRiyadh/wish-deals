@@ -4,7 +4,7 @@ import { FaBook, FaBookmark, FaClock, FaStar, FaTools } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import BookModal from "../BookModal/BookModal";
 
-const SingleCategory = ({ item }) => {
+const SingleCategory = ({ item, setAppointment }) => {
   const { condition_type, location, price, phone_details, used_duration } =
     item;
   return (
@@ -46,7 +46,8 @@ const SingleCategory = ({ item }) => {
           </span>
           <a href="#">
             <label
-              htmlFor="bookNow-modal"
+              onClick={() => setAppointment(item)}
+              htmlFor="category-modal"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Book Now
@@ -54,7 +55,6 @@ const SingleCategory = ({ item }) => {
           </a>
         </div>
       </div>
-      <BookModal></BookModal>
     </div>
   );
 };

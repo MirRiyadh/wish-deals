@@ -60,7 +60,7 @@ const Regsiter = () => {
             const user = result.user;
             console.log(user);
             form.reset();
-            // navigate("/login");
+            navigate("/login");
             updateUserProfile(fullName, data.data.display_url)
               .then(() => {})
               .catch((error) => console.error(error));

@@ -2,12 +2,16 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Loading from "../../layout/Loading/Loading";
+import BookModal from "../BookModal/BookModal";
 import Categories from "../Categories/Categories";
 import Leftside from "./Leftside/Leftside";
 
 const Products = () => {
   const [categoriesname, setCategoriesName] = useState("");
   const [categories, setCategories] = useState([]);
+  const [appointment, setAppointment] = useState(null);
+
+  console.log(appointment);
 
   useEffect(() => {
     fetch(`http://localhost:5000/categories`)
@@ -66,11 +70,16 @@ const Products = () => {
         <div className=" col-span-3 ">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
             {products.map((product) => (
-              <Leftside product={product} key={product._id}></Leftside>
+              <Leftside
+                product={product}
+                setAppointment={setAppointment}
+                key={product._id}
+              ></Leftside>
             ))}
           </div>
         </div>
       </div>
+      {appointment && <BookModal appointment={appointment}></BookModal>}
     </div>
   );
 };

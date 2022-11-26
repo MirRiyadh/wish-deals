@@ -53,7 +53,6 @@ const DisplayProducts = ({ displayProduct }) => {
           </a>
         </div>
       </div>
-      <BookModal></BookModal>
     </div>
   );
 };
