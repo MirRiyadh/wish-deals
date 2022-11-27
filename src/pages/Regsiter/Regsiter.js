@@ -8,6 +8,7 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 import toast from "react-hot-toast";
+import useToken from "../../hooks/useToken/useToken";
 
 const Regsiter = () => {
   const { createUser, providerSignIn, updateUserProfile } =
@@ -24,6 +25,14 @@ const Regsiter = () => {
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
   const facebookProvider = new FacebookAuthProvider();
+
+  const [createdEmail, setCreatedEmail] = useState("");
+
+  const [token] = useToken(createdEmail);
+
+  if (token) {
+    navigate("/");
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -67,6 +76,7 @@ const Regsiter = () => {
             .then((result) => {
               console.log(result);
               toast.success(`${fullName} is added successfully`);
+              setCreatedEmail(email);
               navigate("/login");
             });
         }
@@ -115,7 +125,7 @@ const Regsiter = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
-        navigate("/");
+        //
       })
       .catch((error) => {
         console.error(error);

@@ -1,11 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
+import DashboardLayout from "../../layout/DashboardLayout/DashboardLayout";
 import Main from "../../layout/Main/Main";
 import Blog from "../../pages/Blog/Blog";
 import Categories from "../../pages/Categories/Categories";
+import Dashboard from "../../pages/Dashboards/Dashboard/Dashboard";
 import ErrorPage from "../../pages/ErrorPage/ErrorPage";
 import Home from "../../pages/Home/Home";
 import ShopCategories from "../../pages/Home/ShopCategories/ShopCategories";
 import Login from "../../pages/Login/Login";
+import MyOrders from "../../pages/MyOrders/MyOrders";
 import Products from "../../pages/Products/Products";
 import Register from "../../pages/Regsiter/Regsiter";
 import PrivateRoute from "../PrivateRoute";
@@ -55,4 +58,14 @@ export const router = createBrowserRouter([
     ],
   },
   { path: "*", element: <ErrorPage></ErrorPage> },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout></DashboardLayout>,
+    children: [
+      {
+        path: "/dashboard",
+        element: <MyOrders></MyOrders>,
+      },
+    ],
+  },
 ]);

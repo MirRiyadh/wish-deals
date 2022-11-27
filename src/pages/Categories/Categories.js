@@ -5,29 +5,23 @@ import { Link, useLoaderData } from "react-router-dom";
 import Loading from "../../layout/Loading/Loading";
 import CategoryModal from "./CategoryModal";
 import SingleCategory from "./SingleCategory";
+import axios from "axios";
 
 const Categories = () => {
   const [categoriesname, setCategoriesName] = useState("");
+  const [categories, setCategories] = useState([]);
   const [appointment, setAppointment] = useState(null);
   const items = useLoaderData();
 
-  const { data: categories, isLoading } = useQuery({
-    queryKey: ["products"],
-    queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/categories`);
-      const data = await res.json();
-      console.log(categories);
-      return data;
-    },
-  });
+  useEffect(() => {
+    axios.get("http://localhost:5000/categories").then((response) => {
+      setCategories(response.data);
+    });
+  }, []);
 
   const handleCategoriesName = (categoriesname) => {
     setCategoriesName(categoriesname);
   };
-
-  if (isLoading) {
-    return <Loading></Loading>;
-  }
 
   return (
     <div className="mb-20 mt-14">
