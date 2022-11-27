@@ -4,10 +4,8 @@ import { FaHandHolding } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../firebase/AuthProvider";
 
-const BookModal = ({ appointment, setAppointment, selectedDate, refetch }) => {
-  // treatment is just another name of appointmentOptions with name, slots, _id
-  // const { name: treatmentName, slots, price } = treatment;
-  const { price, phone_details, used_duration } = appointment;
+const BookModal = ({ appointment, setAppointment, refetch }) => {
+  const { price, phone_details, _id, bookedId } = appointment;
 
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -21,6 +19,13 @@ const BookModal = ({ appointment, setAppointment, selectedDate, refetch }) => {
     const phone = form.phone.value;
     const message = form.message.value;
 
+    const today = new Date();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    const date = today.getDate();
+
+    const post_time = `${date}.${month}.${year}`;
+
     const orders = {
       item_name: phone_details.phone_name,
       price: price,
@@ -29,11 +34,10 @@ const BookModal = ({ appointment, setAppointment, selectedDate, refetch }) => {
       mobile_number: phone,
       meet_location: location,
       message: message,
+      date: post_time,
+      bookedId: _id,
     };
 
-    // TODO: send data to the server
-    // and once data is saved then close the modal
-    // and display success toast
     fetch("http://localhost:5000/orders", {
       method: "POST",
       headers: {
@@ -48,6 +52,7 @@ const BookModal = ({ appointment, setAppointment, selectedDate, refetch }) => {
           setAppointment(null);
           toast.success("Order confirmed");
           navigate("/products");
+          refetch();
         } else {
           toast.error(data.message);
         }
@@ -115,11 +120,24 @@ const BookModal = ({ appointment, setAppointment, selectedDate, refetch }) => {
             <br />
             {user?.uid ? (
               <>
-                <input
-                  className="bg-sky-300 hover:bg-sky-400 py-2 text-lg w-full cursor-pointer rounded-lg shadow-md font-semibold "
-                  type="submit"
-                  value="Submit"
-                />
+                {bookedId ? (
+                  <>
+                    <input
+                      className="bg-gray-300 py-2 text-lg w-full cursor-pointer rounded-lg shadow-md font-semibold "
+                      type="submit"
+                      disabled
+                      value="Already Booked"
+                    />
+                  </>
+                ) : (
+                  <>
+                    <input
+                      className="bg-sky-300 hover:bg-sky-400 py-2 text-lg w-full cursor-pointer rounded-lg shadow-md font-semibold "
+                      type="submit"
+                      value="Submit"
+                    />{" "}
+                  </>
+                )}
               </>
             ) : (
               <>

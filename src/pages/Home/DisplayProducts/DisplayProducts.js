@@ -3,9 +3,10 @@ import { BsClockHistory } from "react-icons/bs";
 import { FaTools } from "react-icons/fa";
 import BookModal from "../../BookModal/BookModal";
 
-const DisplayProducts = ({ displayProduct }) => {
+const DisplayProducts = ({ displayProduct, setAppointment }) => {
   const { condition_type, location, price, phone_details, used_duration } =
     displayProduct;
+  console.log(displayProduct?.bookedId);
   return (
     <div className="w-full max-w-sm rounded-lg shadow-md border-orange-300 border bg-gray-50">
       <a href="#">
@@ -45,7 +46,8 @@ const DisplayProducts = ({ displayProduct }) => {
           </span>
           <a href="#">
             <label
-              htmlFor="bookNow-modal"
+              htmlFor="shop-modal"
+              onClick={() => setAppointment(displayProduct)}
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer"
             >
               Book Now

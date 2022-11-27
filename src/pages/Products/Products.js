@@ -19,7 +19,11 @@ const Products = () => {
       .then((data) => setCategories(data));
   }, []);
 
-  const { data: products, isLoading } = useQuery({
+  const {
+    data: products,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(`http://localhost:5000/products`);
@@ -83,6 +87,7 @@ const Products = () => {
         <BookModal
           setAppointment={setAppointment}
           appointment={appointment}
+          refetch={refetch}
         ></BookModal>
       )}
     </div>

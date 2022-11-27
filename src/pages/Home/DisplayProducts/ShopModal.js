@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../firebase/AuthProvider";
+import { AuthContext } from "../../../firebase/AuthProvider";
 
-const CategoryModal = ({ appointment, setAppointment }) => {
+const ShopModal = ({ appointment, setAppointment, refetch }) => {
   const { price, phone_details, _id, bookedId } = appointment;
 
   const { user } = useContext(AuthContext);
@@ -51,6 +51,7 @@ const CategoryModal = ({ appointment, setAppointment }) => {
           setAppointment(null);
           toast.success("Order confirmed");
           navigate("/products");
+          refetch();
         } else {
           toast.error(data.message);
         }
@@ -59,11 +60,11 @@ const CategoryModal = ({ appointment, setAppointment }) => {
 
   return (
     <>
-      <input type="checkbox" id="category-modal" className="modal-toggle" />
+      <input type="checkbox" id="shop-modal" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box relative">
           <label
-            htmlFor="category-modal"
+            htmlFor="shop-modal"
             className="btn btn-sm btn-circle absolute right-2 top-2"
           >
             ✕
@@ -155,4 +156,4 @@ const CategoryModal = ({ appointment, setAppointment }) => {
   );
 };
 
-export default CategoryModal;
+export default ShopModal;

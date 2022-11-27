@@ -3,11 +3,16 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Loading from "../../../layout/Loading/Loading";
 import DisplayProducts from "../DisplayProducts/DisplayProducts";
+import ShopModal from "../DisplayProducts/ShopModal";
 
 const ShopCategories = () => {
-  const [bal, setBal] = useState("");
+  const [appointment, setAppointment] = useState(null);
 
-  const { data: displayProducts, isLoading } = useQuery({
+  const {
+    data: displayProducts,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch(`http://localhost:5000/products`);
@@ -35,8 +40,18 @@ const ShopCategories = () => {
           <DisplayProducts
             displayProduct={displayProduct}
             key={displayProduct._id}
+            setAppointment={setAppointment}
           ></DisplayProducts>
         ))}
+      </div>
+      <div>
+        {appointment && (
+          <ShopModal
+            setAppointment={setAppointment}
+            appointment={appointment}
+            refetch={refetch}
+          ></ShopModal>
+        )}
       </div>
       <div className="md:my-10">
         <button className="px-6 py-2 bg-orange-400 text-white font-semibold uppercase hover:shadow-lg hover:text-black">
