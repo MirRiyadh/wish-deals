@@ -1,23 +1,31 @@
 import React from "react";
-import { BsClockHistory } from "react-icons/bs";
+import { BsClockHistory, BsHeartFill } from "react-icons/bs";
 import { FaBook, FaBookmark, FaClock, FaStar, FaTools } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Verify from "../../../layout/Verify/Verify";
 import { GoVerified } from "react-icons/go";
 
-const Leftside = ({ product, setAppointment }) => {
-  const { condition_type, location, price, phone_details, used_duration } =
+const Leftside = ({ product, setAppointment, handleWishlist }) => {
+  const { condition_type, location, price, phone_details, used_duration, _id } =
     product;
 
   return (
     <div className="w-full max-w-sm rounded-lg shadow-md border-orange-300 border bg-gray-50">
-      <a href="#">
-        <img
-          className="p-8 rounded-t-lg"
-          src={phone_details?.phone_img}
-          alt="product image"
-        />
-      </a>
+      <div>
+        <div className="absolute pl-5 pt-5 ">
+          <button onClick={() => handleWishlist(_id)}>
+            <BsHeartFill className="text-2xl text-rose-600 hover:text-white border-2 hover:bg-rose-600  w-8 h-8 p-1 rounded-full" />
+          </button>
+        </div>
+        <a href="#">
+          <img
+            className="p-8 rounded-t-lg"
+            src={phone_details?.phone_img}
+            alt="product image"
+          />
+        </a>
+      </div>
+
       <div className="px-5 pb-5">
         <a href="#">
           <h5 className="text-xl font-semibold tracking-tight text-gray-900 mb-2">

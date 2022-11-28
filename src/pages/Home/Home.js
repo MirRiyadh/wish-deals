@@ -1,5 +1,6 @@
 import React from "react";
 import AboutUs from "./AboutUs/AboutUs";
+import Advertise from "./Advertise/Advertise";
 import Brands from "./Brands/Brands";
 import IconsSection from "./IconsSection/IconsSection";
 import NewsLetters from "./NewsLetters/NewsLetters";
@@ -13,6 +14,7 @@ const Home = () => {
       <IconsSection></IconsSection>
       <ShopCategories></ShopCategories>
       <Brands></Brands>
+      <Advertise></Advertise>
       <AboutUs></AboutUs>
       <NewsLetters></NewsLetters>
     </div>

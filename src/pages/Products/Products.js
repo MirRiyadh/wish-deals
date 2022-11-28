@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../firebase/AuthProvider";
 
@@ -33,6 +34,23 @@ const Products = () => {
       return data;
     },
   });
+
+  const handleWishlist = (id) => {
+    fetch(`http://localhost:5000/products/wishlist/${id}`, {
+      method: "PUT",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          console.log(data);
+          toast.success("Added to wishlist", 5000);
+          refetch();
+        }
+      });
+  };
 
   if (isLoading) {
     return <Loading></Loading>;
@@ -79,6 +97,7 @@ const Products = () => {
                 product={product}
                 setAppointment={setAppointment}
                 key={product._id}
+                handleWishlist={handleWishlist}
               ></Leftside>
             ))}
           </div>

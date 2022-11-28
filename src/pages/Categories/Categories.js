@@ -6,6 +6,7 @@ import Loading from "../../layout/Loading/Loading";
 import CategoryModal from "./CategoryModal";
 import SingleCategory from "./SingleCategory";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const Categories = () => {
   const [categoriesname, setCategoriesName] = useState("");
@@ -21,6 +22,22 @@ const Categories = () => {
 
   const handleCategoriesName = (categoriesname) => {
     setCategoriesName(categoriesname);
+  };
+
+  const handleWishlist = (id) => {
+    fetch(`http://localhost:5000/products/wishlist/${id}`, {
+      method: "PUT",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          console.log(data);
+          toast.success("Added to wishlist", 5000);
+        }
+      });
   };
 
   return (
@@ -59,6 +76,7 @@ const Categories = () => {
                 item={item}
                 key={item._id}
                 setAppointment={setAppointment}
+                handleWishlist={handleWishlist}
               ></SingleCategory>
             ))}
           </div>

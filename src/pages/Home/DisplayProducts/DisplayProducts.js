@@ -1,21 +1,32 @@
 import React from "react";
-import { BsClockHistory } from "react-icons/bs";
+import { BsClockHistory, BsHeartFill } from "react-icons/bs";
 import { FaTools } from "react-icons/fa";
 import BookModal from "../../BookModal/BookModal";
 
-const DisplayProducts = ({ displayProduct, setAppointment }) => {
-  const { condition_type, location, price, phone_details, used_duration } =
+const DisplayProducts = ({
+  displayProduct,
+  setAppointment,
+  handleWishlist,
+}) => {
+  const { condition_type, location, price, phone_details, used_duration, _id } =
     displayProduct;
-  console.log(displayProduct?.bookedId);
+
   return (
     <div className="w-full max-w-sm rounded-lg shadow-md border-orange-300 border bg-gray-50">
-      <a href="#">
-        <img
-          className="p-8 rounded-t-lg"
-          src={phone_details?.phone_img}
-          alt="product image"
-        />
-      </a>
+      <div>
+        <div className="absolute pl-5 pt-5 ">
+          <button onClick={() => handleWishlist(_id)}>
+            <BsHeartFill className="text-2xl text-rose-600 hover:text-white border-2 hover:bg-rose-600  w-8 h-8 p-1 rounded-full" />
+          </button>
+        </div>
+        <a href="#">
+          <img
+            className="p-8 rounded-t-lg"
+            src={phone_details?.phone_img}
+            alt="product image"
+          />
+        </a>
+      </div>
       <div className="px-5 pb-5">
         <a href="#">
           <h5 className="text-xl font-semibold tracking-tight text-gray-900 mb-2">
@@ -40,7 +51,7 @@ const DisplayProducts = ({ displayProduct, setAppointment }) => {
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-2xl font-bold text-gray-900 2xl:text-xl lg:text-lg">
+          <span className="text-2xl font-bold text-gray-900 2xl:text-xl lg:text-lg text-orange-500">
             {" "}
             {price}/-
           </span>

@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { AuthContext } from "../../firebase/AuthProvider";
 import Loading from "../../layout/Loading/Loading";
 
-const MyProduct = () => {
+const Wishlist = () => {
   const { user } = useContext(AuthContext);
   console.log(user.email);
 
@@ -196,4 +196,4 @@ const MyProduct = () => {
   );
 };
 
-export default MyProduct;
+export default Wishlist;

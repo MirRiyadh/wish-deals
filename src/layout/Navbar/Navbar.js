@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
-import { FaUser } from "react-icons/fa";
+import { FaRegHeart, FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../firebase/AuthProvider";
 import "./Navbar.css";
 import logo from "../../assests/logo/logo.png";
+import Loading from "../Loading/Loading";
+import { useQuery } from "@tanstack/react-query";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -16,6 +18,30 @@ const Navbar = () => {
         console.error(error);
       });
   };
+
+  const {
+    data: wishlists,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["wishlist"],
+    queryFn: async () => {
+      const res = await fetch(`http://localhost:5000/products/wishlist`, {
+        headers: {
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+      const data = await res.json();
+      return data;
+    },
+  });
+  refetch();
+
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
+
+  console.log(wishlists[0].verified);
   return (
     <div className="bg-gray-200 shadow-lg text-black uppercase mb-3">
       <div className="navbar  lg:w-3/4 m-auto">
@@ -87,9 +113,12 @@ const Navbar = () => {
                   <li>
                     <Link to="/dashboard">Dashboard</Link>
                   </li>
-
                   <li>
                     <Link to="/my-products">My Products</Link>
+                  </li>
+
+                  <li>
+                    <Link to="/my-products">Wishlist</Link>
                   </li>
 
                   <hr />
@@ -115,7 +144,11 @@ const Navbar = () => {
             </ul>
           </div>
           <Link to="/" className="btn btn-ghost normal-case text-xl pl-0">
-            <img src={logo} alt="logo" className="w-36 h-6 md:w-56  md:h-8" />
+            <img
+              src={logo}
+              alt="logo"
+              className="w-28 h-6 md:w-48 2xl:w-56 md:h-8"
+            />
           </Link>
         </div>
 
@@ -176,6 +209,12 @@ const Navbar = () => {
 
         {/* //user display option */}
         <div className="navbar-end">
+          <div className="mr-3 ">
+            <p className="mt-[-11px] ml-[-15px] absolute  rounded-full w-[22px] h-[22px] text-white bg-red-400 font-bold">
+              {wishlists.length}
+            </p>
+            <FaRegHeart className="text-2xl" />
+          </div>
           {user?.uid ? (
             <>
               <div>

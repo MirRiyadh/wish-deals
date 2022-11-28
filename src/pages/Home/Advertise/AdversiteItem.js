@@ -1,13 +1,31 @@
 import React from "react";
 import { BsClockHistory, BsHeartFill } from "react-icons/bs";
-import { FaBook, FaBookmark, FaClock, FaStar, FaTools } from "react-icons/fa";
+import { FaTools } from "react-icons/fa";
 import { GoVerified } from "react-icons/go";
-import { Link } from "react-router-dom";
-import BookModal from "../BookModal/BookModal";
+import { AiFillFire } from "react-icons/ai";
+import toast from "react-hot-toast";
 
-const SingleCategory = ({ item, setAppointment, handleWishlist }) => {
+const AdversiteItem = ({ adversiteItem, setAppointment, refetch }) => {
   const { condition_type, location, price, phone_details, used_duration, _id } =
-    item;
+    adversiteItem;
+
+  const handleWishlist = (id) => {
+    fetch(`http://localhost:5000/products/wishlist/${id}`, {
+      method: "PUT",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          console.log(data);
+          toast.success("Added to wishlist", 5000);
+          refetch();
+        }
+      });
+  };
+
   return (
     <div className="w-full max-w-sm rounded-lg shadow-md border-orange-300 border bg-gray-50">
       <div>
@@ -33,6 +51,14 @@ const SingleCategory = ({ item, setAppointment, handleWishlist }) => {
         <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
           {location}
         </span>
+        <div className=" m-auto flex justify-center items-center text-amber-500">
+          <AiFillFire />
+          <span className="  text-xs font-semibold ml-1 py-0.5 rounded block my-2">
+            {" "}
+            Recommended
+          </span>
+        </div>
+
         <div className="flex items-center mt-2.5 mb-5 justify-between">
           <div className="flex items-center font-semibold capitalize">
             <span>
@@ -47,7 +73,7 @@ const SingleCategory = ({ item, setAppointment, handleWishlist }) => {
             <p>{used_duration}</p>
           </div>
           <div>
-            {item?.verified ? (
+            {adversiteItem?.verified ? (
               <>
                 <GoVerified title="verified" className="text-green-600" />
               </>
@@ -59,15 +85,15 @@ const SingleCategory = ({ item, setAppointment, handleWishlist }) => {
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-2xl font-bold text-orange-400 2xl:text-xl lg:text-lg">
+          <span className="text-2xl font-bold text-gray-900 2xl:text-xl lg:text-lg text-orange-500">
             {" "}
             {price}/-
           </span>
           <a href="#">
             <label
-              onClick={() => setAppointment(item)}
-              htmlFor="category-modal"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              htmlFor="adversite-modal"
+              onClick={() => setAppointment(adversiteItem)}
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer"
             >
               Book Now
             </label>
@@ -78,4 +104,4 @@ const SingleCategory = ({ item, setAppointment, handleWishlist }) => {
   );
 };
 
-export default SingleCategory;
+export default AdversiteItem;
