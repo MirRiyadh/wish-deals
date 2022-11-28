@@ -9,6 +9,8 @@ import {
 } from "firebase/auth";
 import toast from "react-hot-toast";
 import useToken from "../../hooks/useToken/useToken";
+import logo from "../../assests/photos/logo.png";
+import register from "../../assests/photos/Wavy_Gen-01_Single-07.jpg";
 
 const Regsiter = () => {
   const { createUser, providerSignIn, updateUserProfile } =
@@ -26,12 +28,11 @@ const Regsiter = () => {
   const githubProvider = new GithubAuthProvider();
   const facebookProvider = new FacebookAuthProvider();
 
-  const [createdEmail, setCreatedEmail] = useState("");
-
-  const [token] = useToken(createdEmail);
+  const [createdUserEmail, setCreatedUserEmail] = useState("");
+  const [token] = useToken(createdUserEmail);
 
   if (token) {
-    navigate("/");
+    navigate("/login");
   }
 
   const handleSubmit = (event) => {
@@ -76,8 +77,7 @@ const Regsiter = () => {
             .then((result) => {
               console.log(result);
               toast.success(`${fullName} is added successfully`);
-              setCreatedEmail(email);
-              navigate("/login");
+              setCreatedUserEmail(email);
             });
         }
 
@@ -162,7 +162,10 @@ const Regsiter = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:w-9/12 lg:m-auto">
-      <div className="p-6 m-auto">{/* <img src={image} alt="photo" /> */}</div>
+      <div className="p-6 m-auto">
+        <img src={logo} alt="" />
+        <img src={register} alt="" />
+      </div>
       <div className="relative flex flex-col justify-center md:my-8 lg:my-4 lg:min-h-screen overflow-hidden">
         <div className="w-full p-6 m-auto  bg-white rounded-md shadow-xl lg:max-w-md">
           <h1 className="text-3xl font-semibold text-center text-sky-500 uppercase">

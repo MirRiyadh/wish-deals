@@ -2,6 +2,7 @@ import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../firebase/AuthProvider";
+import useToken from "../../hooks/useToken/useToken";
 
 const Login = () => {
   const { signIn, providerSignIn } = useContext(AuthContext);
@@ -11,6 +12,8 @@ const Login = () => {
   const from = location.state?.from?.pathname || "/";
 
   const [error, setError] = useState(null);
+  const [loginUserEmail, setLoginUserEmail] = useState("");
+  const [token] = useToken(loginUserEmail);
 
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
@@ -54,8 +57,8 @@ const Login = () => {
         // Signed in
         const user = result.user;
         console.log(user);
+        setLoginUserEmail(email);
         form.reset();
-        navigate(from, { replace: true });
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -63,6 +66,10 @@ const Login = () => {
         console.error(error);
       });
   };
+
+  if (token) {
+    navigate(from, { replace: true });
+  }
 
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">

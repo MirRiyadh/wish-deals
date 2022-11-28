@@ -1,7 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../firebase/AuthProvider";
+
 import Loading from "../../layout/Loading/Loading";
+
 import BookModal from "../BookModal/BookModal";
 import Categories from "../Categories/Categories";
 import Leftside from "./Leftside/Leftside";
@@ -10,8 +13,6 @@ const Products = () => {
   const [categoriesname, setCategoriesName] = useState("");
   const [categories, setCategories] = useState([]);
   const [appointment, setAppointment] = useState(null);
-
-  console.log(appointment);
 
   useEffect(() => {
     fetch(`http://localhost:5000/categories`)

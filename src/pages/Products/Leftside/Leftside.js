@@ -2,6 +2,7 @@ import React from "react";
 import { BsClockHistory } from "react-icons/bs";
 import { FaBook, FaBookmark, FaClock, FaStar, FaTools } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Verify from "../../../layout/Verify/Verify";
 import BookModal from "../../BookModal/BookModal";
 
 const Leftside = ({ product, setAppointment }) => {
@@ -38,6 +39,9 @@ const Leftside = ({ product, setAppointment }) => {
               <BsClockHistory className="mr-1" />
             </span>
             <p>{used_duration}</p>
+          </div>
+          <div>
+            <Verify></Verify>
           </div>
         </div>
         <div className="flex items-center justify-between">

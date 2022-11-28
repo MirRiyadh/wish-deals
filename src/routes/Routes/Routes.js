@@ -3,7 +3,11 @@ import DashboardLayout from "../../layout/DashboardLayout/DashboardLayout";
 import Main from "../../layout/Main/Main";
 import Blog from "../../pages/Blog/Blog";
 import Categories from "../../pages/Categories/Categories";
+import AddProducts from "../../pages/Dashboards/AddProducts/AddProducts";
+import Buyers from "../../pages/Dashboards/Buyers/Buyers";
 import Dashboard from "../../pages/Dashboards/Dashboard/Dashboard";
+import Sellers from "../../pages/Dashboards/Sellers/Sellers";
+import Users from "../../pages/Dashboards/Users/Users";
 import ErrorPage from "../../pages/ErrorPage/ErrorPage";
 import Home from "../../pages/Home/Home";
 import ShopCategories from "../../pages/Home/ShopCategories/ShopCategories";
@@ -11,6 +15,7 @@ import Login from "../../pages/Login/Login";
 import MyOrders from "../../pages/MyOrders/MyOrders";
 import Products from "../../pages/Products/Products";
 import Register from "../../pages/Regsiter/Regsiter";
+import AdminRoute from "../AdminRoute/AdminRoute";
 import PrivateRoute from "../PrivateRoute";
 
 export const router = createBrowserRouter([
@@ -65,6 +70,26 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <MyOrders></MyOrders>,
+      },
+      {
+        path: "/dashboard/users",
+        element: (
+          <PrivateRoute>
+            <Users></Users>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/buyers",
+        element: <Buyers></Buyers>,
+      },
+      {
+        path: "/dashboard/sellers",
+        element: <Sellers></Sellers>,
+      },
+      {
+        path: "/dashboard/add-products",
+        element: <AddProducts></AddProducts>,
       },
     ],
   },

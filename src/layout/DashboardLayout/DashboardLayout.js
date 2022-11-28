@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BsSliders } from "react-icons/bs";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
+import { AuthContext } from "../../firebase/AuthProvider";
+import useAdmin from "../../hooks/useAdmin";
 import Navbar from "../Navbar/Navbar";
 
 const DashboardLayout = () => {
+  const { user } = useContext(AuthContext);
+  const [isAdmin] = useAdmin(user?.email);
+
   return (
     <div>
       <Navbar></Navbar>
@@ -32,10 +37,29 @@ const DashboardLayout = () => {
           <ul className="menu p-4 w-72 bg-sky-300 text-base-content">
             {/* <!-- Sidebar content here --> */}
             <li>
-              <a>Sidebar Item 1</a>
+              <Link to="/dashboard">My Orders</Link>
+            </li>
+
+            <li>
+              <Link to="users">User List</Link>
             </li>
             <li>
-              <a>Sidebar Item 2</a>
+              <Link to="buyers">Buyers</Link>
+            </li>
+            <li>
+              <Link to="sellers">Sellers</Link>
+            </li>
+
+            {isAdmin && (
+              <>
+                <li>
+                  <Link to="sellers">Seeeeeeeee</Link>
+                </li>
+              </>
+            )}
+
+            <li>
+              <Link to="add-products">Add Products</Link>
             </li>
           </ul>
         </div>
