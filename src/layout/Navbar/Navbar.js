@@ -88,6 +88,10 @@ const Navbar = () => {
                     <Link to="/dashboard">Dashboard</Link>
                   </li>
 
+                  <li>
+                    <Link to="/my-products">My Products</Link>
+                  </li>
+
                   <hr />
                   <div className="mt-2">
                     <button
@@ -156,6 +160,10 @@ const Navbar = () => {
               <>
                 <li>
                   <Link to="/dashboard">Dashboard</Link>
+                </li>
+
+                <li>
+                  <Link to="/my-products">My Products</Link>
                 </li>
               </>
             ) : (

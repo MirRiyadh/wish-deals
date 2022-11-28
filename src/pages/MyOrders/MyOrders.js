@@ -49,7 +49,7 @@ const MyOrders = () => {
                 Price
               </th>
               <th scope="col" className="py-3 px-6">
-                <span className="sr-only">Edit</span>
+                <span className="sr-only">Pay</span>
               </th>
             </tr>
           </thead>
@@ -70,7 +70,7 @@ const MyOrders = () => {
                     href="#"
                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                   >
-                    Edit
+                    Pay
                   </a>
                 </td>
               </tr>

@@ -95,8 +95,8 @@ const AddProduct = () => {
             .then((res) => res.json())
             .then((result) => {
               console.log(result);
-              toast.success(`Product added successfully`);
-              navigate("/dashboard");
+              toast.success(`Product added successfully`, 5000);
+              navigate("/my-products");
             });
         }
       })

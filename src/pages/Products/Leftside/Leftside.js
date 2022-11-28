@@ -3,7 +3,7 @@ import { BsClockHistory } from "react-icons/bs";
 import { FaBook, FaBookmark, FaClock, FaStar, FaTools } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Verify from "../../../layout/Verify/Verify";
-import BookModal from "../../BookModal/BookModal";
+import { GoVerified } from "react-icons/go";
 
 const Leftside = ({ product, setAppointment }) => {
   const { condition_type, location, price, phone_details, used_duration } =
@@ -41,11 +41,19 @@ const Leftside = ({ product, setAppointment }) => {
             <p>{used_duration}</p>
           </div>
           <div>
-            <Verify></Verify>
+            {product?.verified ? (
+              <>
+                <GoVerified title="verified" className="text-green-600" />
+              </>
+            ) : (
+              <>
+                <GoVerified title="not verified" className="text-gray-400" />
+              </>
+            )}
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-2xl font-bold text-gray-900 2xl:text-xl lg:text-lg">
+          <span className="text-2xl font-bold text-gray-900 2xl:text-xl lg:text-lg text-orange-500">
             {" "}
             {price}/-
           </span>

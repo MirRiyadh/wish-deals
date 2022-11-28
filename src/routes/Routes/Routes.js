@@ -12,6 +12,7 @@ import ErrorPage from "../../pages/ErrorPage/ErrorPage";
 import Home from "../../pages/Home/Home";
 import ShopCategories from "../../pages/Home/ShopCategories/ShopCategories";
 import Login from "../../pages/Login/Login";
+import MyProduct from "../../pages/My Product/MyProduct";
 import MyOrders from "../../pages/MyOrders/MyOrders";
 import Products from "../../pages/Products/Products";
 import Register from "../../pages/Regsiter/Regsiter";
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
       {
         path: "/products",
         element: <Products></Products>,
+      },
+      {
+        path: "/my-products",
+        element: <MyProduct></MyProduct>,
       },
       {
         path: "/categories/:id",

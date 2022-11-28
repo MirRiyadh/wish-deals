@@ -1,6 +1,7 @@
 import React from "react";
 import { BsClockHistory } from "react-icons/bs";
 import { FaBook, FaBookmark, FaClock, FaStar, FaTools } from "react-icons/fa";
+import { GoVerified } from "react-icons/go";
 import { Link } from "react-router-dom";
 import BookModal from "../BookModal/BookModal";
 
@@ -38,9 +39,20 @@ const SingleCategory = ({ item, setAppointment }) => {
             </span>
             <p>{used_duration}</p>
           </div>
+          <div>
+            {item?.verified ? (
+              <>
+                <GoVerified title="verified" className="text-green-600" />
+              </>
+            ) : (
+              <>
+                <GoVerified title="not verified" className="text-gray-400" />
+              </>
+            )}
+          </div>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-2xl font-bold text-gray-900 2xl:text-xl lg:text-lg">
+          <span className="text-2xl font-bold text-orange-400 2xl:text-xl lg:text-lg">
             {" "}
             {price}/-
           </span>
