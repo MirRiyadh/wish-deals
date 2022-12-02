@@ -1,5 +1,6 @@
 import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import React, { useContext, useState } from "react";
+import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../firebase/AuthProvider";
 import useToken from "../../hooks/useToken/useToken";
@@ -23,6 +24,7 @@ const Login = () => {
     providerSignIn(googleProvider)
       .then((result) => {
         const user = result.user;
+        setLoginUserEmail(user.email);
         console.log(user);
         navigate(from, { replace: true });
       })

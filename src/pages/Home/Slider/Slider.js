@@ -1,5 +1,6 @@
 import { Carousel } from "flowbite-react";
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Slider.css";
 
 const Slider = () => {
@@ -36,9 +37,11 @@ const Slider = () => {
                 {" "}
                 & Enjoy
               </h1>
-              <button className="bg-sky-400 text-white px-8 py-2 font-semibold shadow-md rounded-md hover:bg-slate-100 hover:text-black  my-3 lg:my-8">
-                Buy now
-              </button>
+              <Link to="/products">
+                <button className="bg-sky-400 text-white px-8 py-2 font-semibold shadow-md rounded-md hover:bg-slate-100 hover:text-black  my-3 lg:my-8">
+                  Buy now
+                </button>{" "}
+              </Link>
             </div>
           </div>
         </Carousel>

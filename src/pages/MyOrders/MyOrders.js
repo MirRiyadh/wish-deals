@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 import { AuthContext } from "../../firebase/AuthProvider";
 import Loading from "../../layout/Loading/Loading";
@@ -8,9 +9,13 @@ import Loading from "../../layout/Loading/Loading";
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
 
-  const url = `http://localhost:5000/orders?email=${user?.email}`;
+  const url = `https://react-assignment-twelve-server.vercel.app/orders?email=${user?.email}`;
 
-  const { data: orders = [], isLoading } = useQuery({
+  const {
+    data: orders = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["orders", user?.email],
     queryFn: async () => {
       const res = await fetch(url, {
@@ -23,7 +28,20 @@ const MyOrders = () => {
     },
   });
 
-  console.log(orders);
+  const handleDelete = (id) => {
+    console.log(id);
+    fetch(`https://react-assignment-twelve-server.vercel.app/orders/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          console.log(data);
+          toast.success("Delete successfully", 5000);
+          refetch();
+        }
+      });
+  };
 
   if (isLoading) {
     return <Loading></Loading>;
@@ -66,12 +84,12 @@ const MyOrders = () => {
                 <td class="py-4 px-6 ">{order.meet_location}</td>
                 <td class="py-4 px-6">{order.price}</td>
                 <td class="py-4 px-6 text-right">
-                  <a
-                    href="#"
-                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  <button
+                    onClick={() => handleDelete(order._id)}
+                    class="font-medium text-red-600 dark:text-red-500 hover:underline"
                   >
-                    Pay
-                  </a>
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}

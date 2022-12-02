@@ -3,11 +3,16 @@ import { BsSliders } from "react-icons/bs";
 import { Link, Outlet } from "react-router-dom";
 import { AuthContext } from "../../firebase/AuthProvider";
 import useAdmin from "../../hooks/useAdmin";
+import useBuyer from "../../hooks/useBuyer";
+import useSeller from "../../hooks/useSeller";
 import Navbar from "../Navbar/Navbar";
 
 const DashboardLayout = () => {
   const { user } = useContext(AuthContext);
   const [isAdmin] = useAdmin(user?.email);
+  const [isSeller] = useSeller(user?.email);
+  const [isBuyer] = useBuyer(user?.email);
+  console.log(isAdmin);
 
   return (
     <div>
@@ -36,31 +41,49 @@ const DashboardLayout = () => {
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
           <ul className="menu p-4 w-72 bg-sky-300 text-base-content">
             {/* <!-- Sidebar content here --> */}
-            <li>
-              <Link to="/dashboard">My Orders</Link>
-            </li>
-
-            <li>
-              <Link to="users">User List</Link>
-            </li>
-            <li>
-              <Link to="buyers">Buyers</Link>
-            </li>
-            <li>
-              <Link to="sellers">Sellers</Link>
-            </li>
 
             {isAdmin && (
               <>
-                <li>
-                  <Link to="sellers">Seeeeeeeee</Link>
+                <li className="bg-white mb-3 font-semibold hover:bg-slate-50  rounded-md">
+                  <Link to="users">User List</Link>
+                </li>
+                <li className="bg-white mb-3 font-semibold hover:bg-slate-50  rounded-md">
+                  <Link to="buyers">Buyers</Link>
+                </li>
+                <li className="bg-white mb-3 font-semibold hover:bg-slate-50  rounded-md">
+                  <Link to="sellers">Sellers</Link>
+                </li>
+                <li className="bg-white mb-3 font-semibold hover:bg-slate-50  rounded-md">
+                  <Link to="/dashboard">My Orders</Link>
+                </li>
+                <li className="bg-white mb-3 font-semibold hover:bg-slate-50  rounded-md">
+                  <Link to="wish-list">Wishlist</Link>
+                </li>
+                <li className="bg-white mb-3 font-semibold hover:bg-slate-50  rounded-md">
+                  <Link to="add-products">Add Products</Link>
                 </li>
               </>
             )}
-
-            <li>
-              <Link to="add-products">Add Products</Link>
-            </li>
+            {isSeller && (
+              <>
+                <li className="bg-white mb-3 font-semibold hover:bg-slate-50  rounded-md">
+                  <Link to="/dashboard">My Orders</Link>
+                </li>
+                <li className="bg-white mb-3 font-semibold hover:bg-slate-50  rounded-md">
+                  <Link to="add-products">Add Products</Link>
+                </li>
+              </>
+            )}
+            {isBuyer && (
+              <>
+                <li className="bg-white mb-3 font-semibold hover:bg-slate-50  rounded-md">
+                  <Link to="/dashboard">My Orders</Link>
+                </li>
+                <li className="bg-white mb-3 font-semibold hover:bg-slate-50  rounded-md">
+                  <Link to="wish-list">Wishlist</Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>

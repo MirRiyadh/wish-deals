@@ -6,14 +6,20 @@ import "./Navbar.css";
 import logo from "../../assests/logo/logo.png";
 import Loading from "../Loading/Loading";
 import { useQuery } from "@tanstack/react-query";
+import useBuyer from "../../hooks/useBuyer";
+import useAdmin from "../../hooks/useAdmin";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  console.log(user);
+
+  const [isBuyer] = useBuyer(user?.email);
+  const [isAdmin] = useAdmin(user?.email);
 
   const handleLogout = () => {
     logOut()
-      .then(() => {})
+      .then(() => {
+        localStorage.removeItem("accessToken");
+      })
       .catch((error) => {
         console.error(error);
       });
@@ -26,22 +32,26 @@ const Navbar = () => {
   } = useQuery({
     queryKey: ["wishlist"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/products/wishlist`, {
-        headers: {
-          authorization: `bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
+      const res = await fetch(
+        `https://react-assignment-twelve-server.vercel.app/wishlist?email=${user?.email}`,
+        {
+          headers: {
+            authorization: `bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
       const data = await res.json();
+
       return data;
     },
   });
-  refetch();
+
+  refetch(wishlists);
 
   if (isLoading) {
     return <Loading></Loading>;
   }
 
-  console.log(wishlists[0].verified);
   return (
     <div className="bg-gray-200 shadow-lg text-black uppercase mb-3">
       <div className="navbar  lg:w-3/4 m-auto">
@@ -101,25 +111,28 @@ const Navbar = () => {
               </li>
 
               <li>
-                <Link to="/advertised">Advertised</Link>
-              </li>
-
-              <li>
                 <Link to="/blog">Blog</Link>
               </li>
 
               {user?.uid ? (
                 <>
-                  <li>
-                    <Link to="/dashboard">Dashboard</Link>
-                  </li>
-                  <li>
-                    <Link to="/my-products">My Products</Link>
-                  </li>
+                  {isBuyer ? (
+                    <>
+                      <li>
+                        <Link to="/wishlist">Wishlist</Link>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li>
+                        <Link to="/dashboard">Dashboard</Link>
+                      </li>
 
-                  <li>
-                    <Link to="/my-products">Wishlist</Link>
-                  </li>
+                      <li>
+                        <Link to="/my-products">My Products</Link>
+                      </li>
+                    </>
+                  )}
 
                   <hr />
                   <div className="mt-2">
@@ -183,21 +196,42 @@ const Navbar = () => {
             </li>
 
             <li>
-              <Link to="/advertised">Advertised</Link>
-            </li>
-
-            <li>
               <Link to="/blog">Blog</Link>
             </li>
             {user?.uid ? (
               <>
-                <li>
-                  <Link to="/dashboard">Dashboard</Link>
-                </li>
-
-                <li>
-                  <Link to="/my-products">My Products</Link>
-                </li>
+                {isBuyer ? (
+                  <>
+                    {isAdmin ? (
+                      <>
+                        <li>
+                          <Link to="/wishlist">Wishlist</Link>
+                        </li>
+                        <li>
+                          <Link to="/dashboard">Dashboard</Link>
+                        </li>
+                      </>
+                    ) : (
+                      <>
+                        <li>
+                          <Link to="/wishlist">Wishlist</Link>
+                        </li>
+                        <li>
+                          <Link to="/dashboard">Dashboard</Link>
+                        </li>
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <li>
+                      <Link to="/my-products">My Products</Link>
+                    </li>
+                    <li>
+                      <Link to="/dashboard">Dashboard</Link>
+                    </li>
+                  </>
+                )}
               </>
             ) : (
               <li>
@@ -209,12 +243,15 @@ const Navbar = () => {
 
         {/* //user display option */}
         <div className="navbar-end">
-          <div className="mr-3 ">
-            <p className="mt-[-11px] ml-[-15px] absolute  rounded-full w-[22px] h-[22px] text-white bg-red-400 font-bold">
-              {wishlists.length}
-            </p>
-            <FaRegHeart className="text-2xl" />
-          </div>
+          <Link to="/wishlist">
+            <div className="mr-3 cursor-pointer ">
+              <p className="mt-[-11px] ml-[-15px] absolute  rounded-full w-[22px] h-[22px] text-white bg-red-400 font-bold">
+                {wishlists?.length}
+              </p>{" "}
+              <FaRegHeart className="text-2xl" />
+            </div>
+          </Link>
+
           {user?.uid ? (
             <>
               <div>

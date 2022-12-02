@@ -37,7 +37,7 @@ const AdversiteModal = ({ appointment, setAppointment }) => {
       bookedId: _id,
     };
 
-    fetch("http://localhost:5000/orders", {
+    fetch("https://react-assignment-twelve-server.vercel.app/orders", {
       method: "POST",
       headers: {
         "content-type": "application/json",

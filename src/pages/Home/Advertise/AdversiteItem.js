@@ -4,34 +4,21 @@ import { FaTools } from "react-icons/fa";
 import { GoVerified } from "react-icons/go";
 import { AiFillFire } from "react-icons/ai";
 import toast from "react-hot-toast";
+import { RiHeartFill } from "react-icons/ri";
 
-const AdversiteItem = ({ adversiteItem, setAppointment, refetch }) => {
+const AdversiteItem = ({ adversiteItem, setAppointment, handleWishlist }) => {
   const { condition_type, location, price, phone_details, used_duration, _id } =
     adversiteItem;
-
-  const handleWishlist = (id) => {
-    fetch(`http://localhost:5000/products/wishlist/${id}`, {
-      method: "PUT",
-      headers: {
-        authorization: `bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.acknowledged) {
-          console.log(data);
-          toast.success("Added to wishlist", 5000);
-          refetch();
-        }
-      });
-  };
 
   return (
     <div className="w-full max-w-sm rounded-lg shadow-md border-orange-300 border bg-gray-50">
       <div>
         <div className="absolute pl-5 pt-5 ">
-          <button onClick={() => handleWishlist(_id)}>
-            <BsHeartFill className="text-2xl text-rose-600 hover:text-white border-2 hover:bg-rose-600  w-8 h-8 p-1 rounded-full" />
+          <button onClick={() => handleWishlist(adversiteItem)}>
+            <RiHeartFill
+              className="text-2xl text-rose-600 hover:text-white border-2 hover:bg-rose-600  w-8 h-8 p-1 rounded-full"
+              title="add to wishlist"
+            />
           </button>
         </div>
         <a href="#">

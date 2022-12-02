@@ -66,7 +66,7 @@ const Regsiter = () => {
           };
 
           // save user information
-          fetch("http://localhost:5000/users", {
+          fetch("https://react-assignment-twelve-server.vercel.app/users", {
             method: "POST",
             headers: {
               "content-type": "application/json",
@@ -76,7 +76,7 @@ const Regsiter = () => {
             .then((res) => res.json())
             .then((result) => {
               console.log(result);
-              toast.success(`${fullName} is added successfully`);
+              toast.success(`Register Successfully"`, 5000);
               setCreatedUserEmail(email);
             });
         }
@@ -124,8 +124,35 @@ const Regsiter = () => {
     providerSignIn(googleProvider)
       .then((result) => {
         const user = result.user;
-        console.log(user);
-        //
+        console.log("google", user);
+
+        const users = {
+          name: user.displayName,
+          email: user.email,
+          user_role: "Buyer",
+          image: user.photoURL,
+        };
+
+        setCreatedUserEmail(user.email);
+
+        fetch("https://react-assignment-twelve-server.vercel.app/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(users),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.acknowledged) {
+              toast.success("Register Successfully", 5000);
+
+              navigate("/");
+            } else {
+              toast.error(data.message);
+            }
+          });
       })
       .catch((error) => {
         console.error(error);
@@ -137,8 +164,33 @@ const Regsiter = () => {
     providerSignIn(facebookProvider)
       .then((result) => {
         const user = result.user;
-        console.log(user);
-        navigate("/");
+        console.log("facebook", user);
+        const users = {
+          name: user.displayName,
+          email: user.email,
+          user_role: "Buyer",
+          image: user.photoURL,
+        };
+
+        setCreatedUserEmail(user.email);
+
+        fetch("https://react-assignment-twelve-server.vercel.app/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(users),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.acknowledged) {
+              toast.success("Register Successfully", 5000);
+              navigate("/");
+            } else {
+              toast.error(data.message);
+            }
+          });
       })
 
       .catch((error) => {
@@ -151,8 +203,33 @@ const Regsiter = () => {
     providerSignIn(githubProvider)
       .then((result) => {
         const user = result.user;
-        console.log(user);
-        navigate("/");
+        console.log("github", user);
+        const users = {
+          name: user.displayName,
+          email: user.email,
+          user_role: "Buyer",
+          image: user.photoURL,
+        };
+
+        setCreatedUserEmail(user.email);
+
+        fetch("https://react-assignment-twelve-server.vercel.app/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(users),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.acknowledged) {
+              toast.success("Register Successfully", 5000);
+              navigate("/");
+            } else {
+              toast.error(data.message);
+            }
+          });
       })
 
       .catch((error) => {

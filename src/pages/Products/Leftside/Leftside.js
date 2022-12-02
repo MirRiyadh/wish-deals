@@ -4,6 +4,7 @@ import { FaBook, FaBookmark, FaClock, FaStar, FaTools } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Verify from "../../../layout/Verify/Verify";
 import { GoVerified } from "react-icons/go";
+import { RiHeartFill } from "react-icons/ri";
 
 const Leftside = ({ product, setAppointment, handleWishlist }) => {
   const { condition_type, location, price, phone_details, used_duration, _id } =
@@ -13,8 +14,11 @@ const Leftside = ({ product, setAppointment, handleWishlist }) => {
     <div className="w-full max-w-sm rounded-lg shadow-md border-orange-300 border bg-gray-50">
       <div>
         <div className="absolute pl-5 pt-5 ">
-          <button onClick={() => handleWishlist(_id)}>
-            <BsHeartFill className="text-2xl text-rose-600 hover:text-white border-2 hover:bg-rose-600  w-8 h-8 p-1 rounded-full" />
+          <button onClick={() => handleWishlist(product)}>
+            <RiHeartFill
+              className="text-2xl text-rose-600 hover:text-white border-2 hover:bg-rose-600  w-8 h-8 p-1 rounded-full"
+              title="add to wishlist"
+            />
           </button>
         </div>
         <a href="#">

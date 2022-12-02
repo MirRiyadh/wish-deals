@@ -11,23 +11,29 @@ const Users = () => {
   } = useQuery({
     queryKey: ["orders"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users", {
-        headers: {
-          authorization: `bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
+      const res = await fetch(
+        "https://react-assignment-twelve-server.vercel.app/users",
+        {
+          headers: {
+            authorization: `bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
       const data = await res.json();
       return data;
     },
   });
 
   const handleAdmin = (id) => {
-    fetch(`http://localhost:5000/users/admin/${id}`, {
-      method: "PUT",
-      headers: {
-        authorization: `bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
+    fetch(
+      `https://react-assignment-twelve-server.vercel.app/users/admin/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
@@ -38,9 +44,12 @@ const Users = () => {
   };
 
   const handleVerify = (id) => {
-    fetch(`http://localhost:5000/users/verify/${id}`, {
-      method: "PUT",
-    })
+    fetch(
+      `https://react-assignment-twelve-server.vercel.app/users/verify/${id}`,
+      {
+        method: "PUT",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
@@ -51,7 +60,7 @@ const Users = () => {
   };
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/users/${id}`, {
+    fetch(`https://react-assignment-twelve-server.vercel.app/users/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

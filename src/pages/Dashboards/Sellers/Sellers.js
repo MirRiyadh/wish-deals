@@ -11,18 +11,21 @@ const Sellers = () => {
   } = useQuery({
     queryKey: ["seller"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users/seller", {
-        headers: {
-          authorization: `bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
+      const res = await fetch(
+        "https://react-assignment-twelve-server.vercel.app/users/seller",
+        {
+          headers: {
+            authorization: `bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
       const data = await res.json();
       return data;
     },
   });
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/users/${id}`, {
+    fetch(`https://react-assignment-twelve-server.vercel.app/users/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

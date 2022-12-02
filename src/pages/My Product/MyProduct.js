@@ -16,7 +16,7 @@ const MyProduct = () => {
     queryKey: ["myProducts"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/products/myproducts?email=${user?.email}`,
+        `https://react-assignment-twelve-server.vercel.app/products/myproducts?email=${user?.email}`,
         {
           headers: {
             authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -31,12 +31,15 @@ const MyProduct = () => {
   console.log(myProducts);
 
   const handleAdvertise = (id) => {
-    fetch(`http://localhost:5000/products/adversite/${id}`, {
-      method: "PUT",
-      headers: {
-        authorization: `bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
+    fetch(
+      `https://react-assignment-twelve-server.vercel.app/products/adversite/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
@@ -48,9 +51,12 @@ const MyProduct = () => {
   };
 
   const handleSold = (id) => {
-    fetch(`http://localhost:5000/products/sold/${id}`, {
-      method: "PUT",
-    })
+    fetch(
+      `https://react-assignment-twelve-server.vercel.app/products/sold/${id}`,
+      {
+        method: "PUT",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
@@ -62,7 +68,7 @@ const MyProduct = () => {
   };
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/products/${id}`, {
+    fetch(`https://react-assignment-twelve-server.vercel.app/products/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

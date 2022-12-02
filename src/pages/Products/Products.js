@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../firebase/AuthProvider";
+import useBuyer from "../../hooks/useBuyer";
 
 import Loading from "../../layout/Loading/Loading";
 
@@ -11,12 +12,13 @@ import Categories from "../Categories/Categories";
 import Leftside from "./Leftside/Leftside";
 
 const Products = () => {
+  const { user } = useContext(AuthContext);
   const [categoriesname, setCategoriesName] = useState("");
   const [categories, setCategories] = useState([]);
   const [appointment, setAppointment] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/categories`)
+    fetch(`https://react-assignment-twelve-server.vercel.app/categories`)
       .then((res) => res.json())
       .then((data) => setCategories(data));
   }, []);
@@ -28,26 +30,48 @@ const Products = () => {
   } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/products`);
+      const res = await fetch(
+        `https://react-assignment-twelve-server.vercel.app/products`
+      );
       const data = await res.json();
       console.log(products);
       return data;
     },
   });
 
-  const handleWishlist = (id) => {
-    fetch(`http://localhost:5000/products/wishlist/${id}`, {
-      method: "PUT",
+  const handleWishlist = (product) => {
+    console.log("wish", product, user.email);
+    const { phone_img, phone_name, phone_processor, phone_ram, phone_camera } =
+      product.phone_details;
+
+    const wishlist = {
+      name: phone_name,
+      img: phone_img,
+      processor: phone_processor,
+      ram: phone_ram,
+      category_name: product.category_name,
+      condition_type: product.condition_type,
+      price: product.price,
+      email: user.email,
+      status: product.status,
+      camera: phone_camera,
+    };
+
+    fetch("https://react-assignment-twelve-server.vercel.app/wishlist", {
+      method: "POST",
       headers: {
-        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        "content-type": "application/json",
       },
+      body: JSON.stringify(wishlist),
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         if (data.acknowledged) {
-          console.log(data);
-          toast.success("Added to wishlist", 5000);
+          toast.success("Added to wishlist");
           refetch();
+        } else {
+          toast.error(data.message);
         }
       });
   };

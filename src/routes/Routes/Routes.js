@@ -6,6 +6,7 @@ import Categories from "../../pages/Categories/Categories";
 import AddProducts from "../../pages/Dashboards/AddProducts/AddProducts";
 import Buyers from "../../pages/Dashboards/Buyers/Buyers";
 import Dashboard from "../../pages/Dashboards/Dashboard/Dashboard";
+import Payment from "../../pages/Dashboards/Dashboard/Payment";
 import Sellers from "../../pages/Dashboards/Sellers/Sellers";
 import Users from "../../pages/Dashboards/Users/Users";
 import ErrorPage from "../../pages/ErrorPage/ErrorPage";
@@ -16,6 +17,7 @@ import MyProduct from "../../pages/My Product/MyProduct";
 import MyOrders from "../../pages/MyOrders/MyOrders";
 import Products from "../../pages/Products/Products";
 import Register from "../../pages/Regsiter/Regsiter";
+import Wishlist from "../../pages/Wishlist/Wishlist";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import PrivateRoute from "../PrivateRoute";
 
@@ -45,25 +47,35 @@ export const router = createBrowserRouter([
         element: <MyProduct></MyProduct>,
       },
       {
+        path: "/wishlist",
+        element: <Wishlist></Wishlist>,
+      },
+      {
         path: "/categories/:id",
         element: <Categories></Categories>,
         loader: async ({ params }) =>
-          fetch(`http://localhost:5000/categories/${params.id}`),
+          fetch(
+            `https://react-assignment-twelve-server.vercel.app/categories/${params.id}`
+          ),
       },
       {
         path: "/displayProducts/:id",
         element: <ShopCategories></ShopCategories>,
         loader: async ({ params }) =>
-          fetch(`http://localhost:5000/products/${params.id}`),
+          fetch(
+            `https://react-assignment-twelve-server.vercel.app/products/${params.id}`
+          ),
       },
 
       {
         path: "/blog",
-        element: (
-          <PrivateRoute>
-            <Blog></Blog>
-          </PrivateRoute>
-        ),
+        element: <Blog></Blog>,
+      },
+      {
+        path: "wishlist/payment/:id",
+        element: <Payment></Payment>,
+        loader: async ({ params }) =>
+          fetch(`http://localhost:5000/wishlist/payment/${params.id}`),
       },
     ],
   },
@@ -79,22 +91,34 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/users",
         element: (
-          <PrivateRoute>
+          <AdminRoute>
             <Users></Users>
-          </PrivateRoute>
+          </AdminRoute>
         ),
       },
       {
         path: "/dashboard/buyers",
-        element: <Buyers></Buyers>,
+        element: (
+          <AdminRoute>
+            <Buyers></Buyers>
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/sellers",
-        element: <Sellers></Sellers>,
+        element: (
+          <AdminRoute>
+            <Sellers></Sellers>
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/add-products",
         element: <AddProducts></AddProducts>,
+      },
+      {
+        path: "/dashboard/wish-list",
+        element: <Wishlist></Wishlist>,
       },
     ],
   },

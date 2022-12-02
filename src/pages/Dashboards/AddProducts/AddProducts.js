@@ -15,7 +15,9 @@ const AddProducts = () => {
   } = useQuery({
     queryKey: ["verify"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/verify/${user?.email}`);
+      const res = await fetch(
+        `https://react-assignment-twelve-server.vercel.app/verify/${user?.email}`
+      );
       const data = await res.json();
       return data;
     },

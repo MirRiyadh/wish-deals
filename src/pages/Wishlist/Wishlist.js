@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../firebase/AuthProvider";
 import Loading from "../../layout/Loading/Loading";
 
@@ -9,14 +10,14 @@ const Wishlist = () => {
   console.log(user.email);
 
   const {
-    data: myProducts,
+    data: wishlists,
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["myProducts"],
+    queryKey: ["mywishlist"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/products/myproducts?email=${user?.email}`,
+        `https://react-assignment-twelve-server.vercel.app/wishlist?email=${user?.email}`,
         {
           headers: {
             authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -24,19 +25,21 @@ const Wishlist = () => {
         }
       );
       const data = await res.json();
+
       return data;
     },
   });
 
-  console.log(myProducts);
-
-  const handleAdvertise = (id) => {
-    fetch(`http://localhost:5000/products/adversite/${id}`, {
-      method: "PUT",
-      headers: {
-        authorization: `bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
+  const handlePayment = (id) => {
+    fetch(
+      `https://react-assignment-twelve-server.vercel.app/products/adversite/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
@@ -47,32 +50,25 @@ const Wishlist = () => {
       });
   };
 
-  const handleSold = (id) => {
-    fetch(`http://localhost:5000/products/sold/${id}`, {
-      method: "PUT",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.acknowledged) {
-          console.log(data);
-          toast.success("Item Sold successfully", 5000);
-          refetch();
-        }
-      });
-  };
-
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/products/${id}`, {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.acknowledged) {
-          console.log(data);
-          toast.success("Delete successfully", 5000);
-          refetch();
+    if (window.confirm("Are you sure delete the item?") === true) {
+      fetch(
+        `https://react-assignment-twelve-server.vercel.app/wishlist/${id}`,
+        {
+          method: "DELETE",
         }
-      });
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.acknowledged) {
+            console.log(data);
+            toast.success("Delete successfully", 5000);
+            refetch();
+          }
+        });
+    } else {
+      return "ok";
+    }
   };
 
   if (isLoading) {
@@ -80,8 +76,8 @@ const Wishlist = () => {
   }
 
   return (
-    <div className="md:w-11/12  lg:w-8/12 m-auto py-10 md:pb-56 md:pt-5">
-      <h1 className="text-2xl lg:my-3 mb-3 font-semibold">Product Lists</h1>
+    <div className="md:w-11/12  lg:w-11/12 2xl:w-10/12 m-auto py-10 md:pb-56 md:pt-5">
+      <h1 className="text-2xl lg:my-3 mb-3 font-semibold">Wishlists</h1>
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-orange-400 dark:text-white">
@@ -99,10 +95,10 @@ const Wishlist = () => {
                 Ram / Storage
               </th>
               <th scope="col" className="py-3 px-6">
-                Status
+                Processor
               </th>
               <th scope="col" className="py-3 px-6">
-                Advertise
+                Status
               </th>
               <th scope="col" className="py-3 px-6">
                 <span className="sr-only">Delete</span>
@@ -111,7 +107,7 @@ const Wishlist = () => {
             </tr>
           </thead>
           <tbody className="text-black">
-            {myProducts.map((myProduct) => (
+            {wishlists.map((wishlist) => (
               <tr class="bg-white border-b dark:bg-orange-50 dark:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-200">
                 <th
                   scope="row"
@@ -120,67 +116,57 @@ const Wishlist = () => {
                   <div className="flex items-center">
                     <img
                       className="w-8 h-8 rounded-full mr-3"
-                      src={myProduct?.phone_details?.phone_img}
+                      src={wishlist?.img}
                       alt=""
                     />
-                    {myProduct?.phone_details?.phone_name}
+                    {wishlist?.name}
                   </div>
                 </th>
-                <td class="py-4 px-6 ">{myProduct.price}</td>
-                <td class="py-4 px-6 ">
-                  {myProduct?.phone_details?.phone_camera}
-                </td>
+                <td class="py-4 px-6 ">{wishlist.price}</td>
+                <td class="py-4 px-6 ">{wishlist?.camera}</td>
 
-                <td class="py-4 px-6 ">
-                  {myProduct?.phone_details?.phone_ram}
-                </td>
-                <td class="py-4 px-6 ">
-                  {myProduct?.status !== "sold" ? (
-                    <>
-                      <button
-                        onClick={() => handleSold(myProduct._id)}
-                        className="bg-teal-500 hover:bg-sky-500 px-3 py-1 rounded-2xl font-semibold capitalize text-white"
-                      >
-                        Available
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <button
-                        onClick={() => handleSold(myProduct._id)}
-                        className="bg-slate-400 px-6 py-1 rounded-2xl font-semibold capitalize text-white"
-                      >
-                        Sold
-                      </button>
-                    </>
-                  )}
-                </td>
+                <td class="py-4 px-6 ">{wishlist?.ram}</td>
+                <td class="py-4 px-6 ">{wishlist?.processor}</td>
 
                 <td class="py-4 px-6 hover:underline">
-                  {myProduct?.adversite ? (
+                  {wishlist?.price && !wishlist.paid && (
+                    <Link to={`/wishlist/payment/${wishlist._id}`}>
+                      <button className="bg-blue-400 px-4 py-1 rounded-2xl font-semibold capitalize text-white">
+                        Pay
+                      </button>
+                    </Link>
+                  )}
+                  {wishlist?.price && wishlist.paid && (
+                    <Link>
+                      <button className="bg-blue-400 px-4 py-1 rounded-2xl font-semibold capitalize text-white">
+                        Paid
+                      </button>
+                    </Link>
+                  )}
+                  {/* {wishlist?.price && !wishlist.paid ? (
                     <>
                       <button
-                        onClick={() => handleAdvertise(myProduct._id)}
+                        onClick={() => handlePayment(wishlist._id)}
                         className="bg-blue-400 px-4 py-1 rounded-2xl font-semibold capitalize text-white"
                       >
-                        Running
+                        Paid
                       </button>
                     </>
                   ) : (
                     <>
                       <button
-                        onClick={() => handleAdvertise(myProduct._id)}
-                        className="bg-rose-400 hover:bg-rose-600  px-4 py-1 rounded-2xl font-semibold capitalize text-white"
+                        onClick={() => handlePayment(wishlist._id)}
+                        className="bg-blue-400 hover:bg-rose-600  px-4 py-1 rounded-2xl font-semibold capitalize text-white"
                       >
-                        Adversite
+                        Pay
                       </button>
                     </>
-                  )}
+                  )} */}
                 </td>
 
                 <td class="py-4 px-6 text-right">
                   <button
-                    onClick={() => handleDelete(myProduct._id)}
+                    onClick={() => handleDelete(wishlist._id)}
                     href="#"
                     class="font-medium text-rose-600 dark:text-rose-600 hover:underline"
                   >

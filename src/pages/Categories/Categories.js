@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaBook, FaBookmark, FaClock, FaStar } from "react-icons/fa";
 import { Link, useLoaderData } from "react-router-dom";
 import Loading from "../../layout/Loading/Loading";
@@ -7,35 +7,59 @@ import CategoryModal from "./CategoryModal";
 import SingleCategory from "./SingleCategory";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { AuthContext } from "../../firebase/AuthProvider";
 
 const Categories = () => {
+  const { user } = useContext(AuthContext);
   const [categoriesname, setCategoriesName] = useState("");
   const [categories, setCategories] = useState([]);
   const [appointment, setAppointment] = useState(null);
   const items = useLoaderData();
 
   useEffect(() => {
-    axios.get("http://localhost:5000/categories").then((response) => {
-      setCategories(response.data);
-    });
+    axios
+      .get("https://react-assignment-twelve-server.vercel.app/categories")
+      .then((response) => {
+        setCategories(response.data);
+      });
   }, []);
 
   const handleCategoriesName = (categoriesname) => {
     setCategoriesName(categoriesname);
   };
 
-  const handleWishlist = (id) => {
-    fetch(`http://localhost:5000/products/wishlist/${id}`, {
-      method: "PUT",
+  const handleWishlist = (product) => {
+    console.log("wish", product, user.email);
+    const { phone_img, phone_name, phone_processor, phone_ram, phone_camera } =
+      product.phone_details;
+
+    const wishlist = {
+      name: phone_name,
+      img: phone_img,
+      processor: phone_processor,
+      ram: phone_ram,
+      category_name: product.category_name,
+      condition_type: product.condition_type,
+      price: product.price,
+      email: user?.email,
+      status: product.status,
+      camera: phone_camera,
+    };
+
+    fetch("https://react-assignment-twelve-server.vercel.app/wishlist", {
+      method: "POST",
       headers: {
-        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        "content-type": "application/json",
       },
+      body: JSON.stringify(wishlist),
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         if (data.acknowledged) {
-          console.log(data);
-          toast.success("Added to wishlist", 5000);
+          toast.success("Added to wishlist");
+        } else {
+          toast.error(data.message);
         }
       });
   };
@@ -82,7 +106,12 @@ const Categories = () => {
           </div>
         </div>
       </div>
-      {appointment && <CategoryModal appointment={appointment}></CategoryModal>}
+      {appointment && (
+        <CategoryModal
+          appointment={appointment}
+          setAppointment={setAppointment}
+        ></CategoryModal>
+      )}
     </div>
   );
 };

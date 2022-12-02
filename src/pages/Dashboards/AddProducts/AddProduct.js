@@ -85,7 +85,7 @@ const AddProduct = () => {
           };
 
           // save products information
-          fetch("http://localhost:5000/products", {
+          fetch("https://react-assignment-twelve-server.vercel.app/products", {
             method: "POST",
             headers: {
               "content-type": "application/json",
