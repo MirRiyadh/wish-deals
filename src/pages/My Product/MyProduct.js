@@ -111,7 +111,7 @@ const MyProduct = () => {
                 Advertise
               </th>
               <th scope="col" className="py-3 px-6">
-                <span className="sr-only">Delete</span>
+                <span className="sr-only uppercase">Delete</span>
               </th>
               <th></th>
             </tr>
