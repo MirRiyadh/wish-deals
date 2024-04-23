@@ -1,4 +1,4 @@
-import React from "react";
+kiimport React from "react";
 import icon1 from "../../../assests/brands/iphone_logo.png";
 import icon2 from "../../../assests/brands/Samsung_logo.png";
 import icon3 from "../../../assests/brands/Oneplus-logo.png";
@@ -21,12 +21,7 @@ const Brands = () => {
       name: "oneplus",
       img: icon3,
       id: 3,
-    },
-    {
-      name: "huawei",
-      img: icon4,
-      id: 4,
-    },
+    }
   ];
   return (
     <div className="mb-10 md:mb-20">
